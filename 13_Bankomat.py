@@ -24,7 +24,7 @@ def buildSolution(x, bestnote):
         x -= banknote
     return ret
 
-b = [1, 5, 10, 25] 
+b = [1, 5, 10, 25]
 n = len(b)
 x = 30
 cache = [-1] * (x+1)
