@@ -27,7 +27,7 @@ class Stack:
 
 class TokenBucket:
     def __init__(self, token_life = 30, lifespan = 3600 * 24):
-        self.token_life = token_life  
+        self.token_life = token_life
         self.tokens = Stack()
         self.running = True
         self.lifespan = lifespan
@@ -65,7 +65,7 @@ class TokenBucket:
         self.fill_thread.join()
         self.cleanup_thread.join()
 
-#Пример работы
+
 if __name__ == "__main__":
     bucket = TokenBucket(token_life=30, lifespan=100)
 
