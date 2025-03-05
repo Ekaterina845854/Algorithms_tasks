@@ -2,11 +2,11 @@
 
 
 def find_independent_components(graph):
-    visited = set() 
+    visited = set()
     components = []
 
     def dfs(node, component):
-        visited.add(node)  
+        visited.add(node)
         component.append(node)
         for neighbor in graph.get(node, []):
             if neighbor not in visited:
@@ -31,14 +31,14 @@ def has_cycles(metrics):
             return True
         if metric in visited:
             return False
-        
+
         visited.add(metric)
         stack.add(metric)
-        
+
         for neighbor in metrics.get(metric, []):
             if dfs(neighbor):
                 return True
-        
+
         stack.remove(metric)
         return False
 
@@ -62,7 +62,7 @@ def topological_sort(graph):
         if vertex not in visited:
             dfs(vertex, visited, stack)
 
-    return stack[::-1]  
+    return stack[::-1]
 
 def analyze_metrics(metrics):
     components = find_independent_components(metrics)
@@ -71,24 +71,24 @@ def analyze_metrics(metrics):
     for component in components:
         subgraph = {node: metrics.get(node, []) for node in component}
         if has_cycles(subgraph):
-            results.append((component, True, None))  
+            results.append((component, True, None))
         else:
             order = topological_sort(subgraph)
-            results.append((component, False, order)) 
+            results.append((component, False, order))
     return results
 
 
 
 
-metrics = {                                           
-    "Данные1": ["Метрика1", "Метрика2", "Метрика3"],  
-    "Метрика2": ["Метрика1"],                                            
-     "Метрика3": ["Метрика4", "Метрика5"],                                          
-    "Данные2": ["Метрика6"],                          
-    "Метрика6": ["Метрика7"],                         
-    "Метрика7": ["Метрика8"],                          
-    "Метрика8": ["Метрика6"],                          
-}                                                     
+metrics = {
+    "Данные1": ["Метрика1", "Метрика2", "Метрика3"],
+    "Метрика2": ["Метрика1"],
+     "Метрика3": ["Метрика4", "Метрика5"],
+    "Данные2": ["Метрика6"],
+    "Метрика6": ["Метрика7"],
+    "Метрика7": ["Метрика8"],
+    "Метрика8": ["Метрика6"],
+}
 
 result = analyze_metrics(metrics)
 print(result)
