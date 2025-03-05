@@ -21,12 +21,12 @@ class UndoRedoStack:
         if self.current_index < len(self.stack) - 1:
             self.current_index += 1
             return self.stack[self.current_index]
-        return None 
+        return None
 
     def active(self):
         if self.current_index >= 0:
             return self.stack[self.current_index]
-        return None 
+        return None
 
 def convert_to_bw(image):
     arr = np.array(image)
@@ -36,11 +36,10 @@ def convert_to_bw(image):
 def mirror_image(image):
     return image.transpose(Image.FLIP_LEFT_RIGHT)
 
-# Пример использования:
 if __name__ == "__main__":
     undo_redo_stack = UndoRedoStack()
 
-    img_path = "D:\Infotecs\i.jpg" 
+    img_path = "D:\Infotecs\i.jpg"
     original_image = Image.open(img_path)
 
     undo_redo_stack.append(original_image)
