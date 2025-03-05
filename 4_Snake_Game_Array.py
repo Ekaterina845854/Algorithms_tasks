@@ -9,9 +9,9 @@ class SnakeGame:
         self.width = width
         self.height = height
         self.board = [[0 for _ in range(width)] for _ in range(height)]
-        self.snake = [(0, 0)] 
-        self.board[0][0] = 1 
-        self.direction = (0, 1) 
+        self.snake = [(0, 0)]
+        self.board[0][0] = 1
+        self.direction = (0, 1)
         self.set_random_fruit()
         self.running = True
 
@@ -29,7 +29,7 @@ class SnakeGame:
             self.running = False
             return
         self.snake.append((new_r, new_c))
-        if self.board[new_r][new_c] == -1: 
+        if self.board[new_r][new_c] == -1:
             self.set_random_fruit()
         else:
             tail_r, tail_c = self.snake.pop(0)
@@ -37,18 +37,11 @@ class SnakeGame:
         for i, (r, c) in enumerate(self.snake):
             self.board[r][c] = i + 1
 
-    def up(self):
-        if self.direction != (1, 0):
-            self.direction = (-1, 0)
-    def down(self):
-        if self.direction != (-1, 0):
-            self.direction = (1, 0)
-    def left(self):
-        if self.direction != (0, 1):
-            self.direction = (0, -1)
-    def right(self):
-        if self.direction != (0, -1):
-            self.direction = (0, 1)
+    def change_direction(self, new_direction):
+        x1, y1 = self.direction
+        x2, y2 = new_direction
+        if x1 * x2 + y1 * y2 != -1:
+            self.direction = new_direction
 
 class GameView:
     def __init__(self, game):
@@ -78,14 +71,13 @@ class GameController:
                 self.game.running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.game.up()
+                    self.game.change_direction((-1, 0))
                 elif event.key == pygame.K_DOWN:
-                    self.game.down()
+                    self.game.change_direction((1, 0))
                 elif event.key == pygame.K_LEFT:
-                    self.game.left()
+                    self.game.change_direction((0, -1))
                 elif event.key == pygame.K_RIGHT:
-                    self.game.right()
-    
+                    self.game.change_direction((0, 1))
     def run(self):
         while self.game.running:
             self.handle_events()
@@ -94,7 +86,7 @@ class GameController:
             self.view.clock.tick(FPS)
         pygame.quit()
 
-# Запуск игры
+
 if __name__ == "__main__":
     game = SnakeGame(20, 15)
     view = GameView(game)
