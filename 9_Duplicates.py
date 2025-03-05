@@ -22,7 +22,7 @@ def dhash(image, hash_size=9):
     image = image.resize((hash_size, hash_size))
     pixels = np.array(image)
 
-    hash_length = 2 * ((hash_size - 1) **2) 
+    hash_length = 2 * ((hash_size - 1) **2)
     bit_array = BitArray(hash_length)
 
     index = 0
@@ -56,7 +56,7 @@ def are_images_similar(image_path1, image_path2, threshold):
     hash2 = dhash(image2)
 
     distance = hamming_distance(hash1, hash2)
-    
+
     if distance == threshold:
         return True, "same"
     if distance < threshold:
@@ -68,5 +68,3 @@ if __name__ == "__main__":
     imagepath1 = "D:\Infotecs\i.jpg"
     imagepath2 = "D:\Infotecs\i.jpg"
     print(are_images_similar(imagepath1, imagepath2, 10))
-
-    
