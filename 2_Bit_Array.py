@@ -1,7 +1,7 @@
 class BitArray:
     def __init__(self, length):
         self.length = length
-        self.array = [0] * ((length + 31) // 32) 
+        self.array = [0] * ((length + 31) // 32)
 
     def set(self, i):
         if 0 <= i < self.length:
