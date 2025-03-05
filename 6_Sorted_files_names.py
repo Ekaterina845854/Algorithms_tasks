@@ -1,5 +1,6 @@
 import os
 
+#функция сравнения файлов
 def compare(file1: str, file2: str) -> bool:
     with open(file1, 'r') as f1, open(file2, 'r') as f2:
         while True:
@@ -7,10 +8,10 @@ def compare(file1: str, file2: str) -> bool:
             chunk2 = f2.read()
             if chunk1 > chunk2:
                 return False
-            if not chunk1:  
+            if not chunk1:
                 return True
-                
 
+#Функция сортировки файлов (критерий - содержимое)
 def natural_merge_sort(arr):
     runs = []
     start = 0
@@ -20,7 +21,7 @@ def natural_merge_sort(arr):
             end +=1
         runs.append(arr[start:end])
         start = end
-    
+
     while len(runs) > 1:
         new_runs = []
         for i in range(0, len(runs), 2):
@@ -28,10 +29,8 @@ def natural_merge_sort(arr):
                 new_runs.append(merge(runs[i], runs[i+1]))
             else:
                 new_runs.append(runs[i])
-        runs = new_runs 
+        runs = new_runs
     return runs[0] if runs else []
-
-
 def merge(left, right):
     sorted_arr = []
     i = 0
@@ -47,15 +46,16 @@ def merge(left, right):
     sorted_arr.extend(right[j:])
     return sorted_arr
 
-path1 = "D:/Infotecs/file1.txt"
-path2 = "D:/Infotecs/file2.txt"
-path3 = "D:/Infotecs/file3.txt"
+if __name__ == "__main__":
+    path1 = "D:/Infotecs/file1.txt"
+    path2 = "D:/Infotecs/file2.txt"
+    path3 = "D:/Infotecs/file3.txt"
 
 
-file1 = os.path.basename(path1)
-file2 = os.path.basename(path2)
-file3 = os.path.basename(path3)
+    file1 = os.path.basename(path1)
+    file2 = os.path.basename(path2)
+    file3 = os.path.basename(path3)
 
-arr = [file1, file2, file3]
+    arr = [file1, file2, file3]
 
-natural_merge_sort(arr)
+    natural_merge_sort(arr)
