@@ -8,49 +8,39 @@ class SnakeGame:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.snake = [(0, 0)]  
-        self.direction = (0, 1)  
+        self.snake = [(0, 0)]
+        self.direction = (0, 1)
         self.running = True
         self.set_random_fruit()
-    
+
     def set_random_fruit(self):
         while True:
             fruit = (random.randint(0, self.height - 1), random.randint(0, self.width - 1))
             if fruit not in self.snake:
                 self.fruit = fruit
                 break
-    
+
     def move(self):
         head_r, head_c = self.snake[-1]
         dr, dc = self.direction
         new_r, new_c = head_r + dr, head_c + dc
-        
+
         if not (0 <= new_r < self.height and 0 <= new_c < self.width) or (new_r, new_c) in self.snake:
             self.running = False
             return
-        
+
         self.snake.append((new_r, new_c))
-        
-        if (new_r, new_c) == self.fruit: 
+
+        if (new_r, new_c) == self.fruit:
             self.set_random_fruit()
         else:
-            self.snake.pop(0) 
-    
-    def up(self):
-        if self.direction != (1, 0):
-            self.direction = (-1, 0)
-    
-    def down(self):
-        if self.direction != (-1, 0):
-            self.direction = (1, 0)
-    
-    def left(self):
-        if self.direction != (0, 1):
-            self.direction = (0, -1)
-    
-    def right(self):
-        if self.direction != (0, -1):
-            self.direction = (0, 1)
+            self.snake.pop(0)
+
+    def change_direction(self, new_direction):
+        x1, y1 = self.direction
+        x2, y2 = new_direction
+        if x1 * x2 + y1 * y2 != -1:
+            self.direction = new_direction
 
 class GameView:
     def __init__(self, game):
@@ -77,14 +67,14 @@ class GameController:
                 self.game.running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.game.up()
+                    self.game.change_direction((-1, 0))
                 elif event.key == pygame.K_DOWN:
-                    self.game.down()
+                    self.game.change_direction((1, 0))
                 elif event.key == pygame.K_LEFT:
-                    self.game.left()
+                    self.game.change_direction((0, -1))
                 elif event.key == pygame.K_RIGHT:
-                    self.game.right()
-    
+                    self.game.change_direction((0, 1))
+
     def run(self):
         while self.game.running:
             self.handle_events()
